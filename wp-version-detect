@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# REQUIREMENTS: lftp
+
+# FIXME this was gutted from another script, so there is a little bloat that could be removed
+
+DOMAIN=''
+
+FTP_HOST=''
+FTP_USER=''
+FTP_PASS=''
+FTP_PATH="" #where the wordpress files are actually stored
+
+# lftp scripts
+LFTP_AUTOLOGIN="open $FTP_HOST -u $FTP_USER,$FTP_PASS"
+
+# CMS TYPES
+IS_WORDPRESS=1
+
+# output the version number
+function wpversion() {
+                lftp -c "$LFTP_AUTOLOGIN; get $FTP_PATH/wp-includes/version.php"
+                # TODO would be cool if this could be just a single sed command
+                grep '^[:space:]*\$wp_version' version.php | sed "s/.*'\([0-9].*\)'.*/\1/"
+}
+
+function cmsver() {
+        cms=''
+        version=''
+
+        if [ IS_WORDPRESS ]
+        then
+                cms='WordPress'
+                version=`wpversion`
+
+                # cleanup
+                rm version.php
+        fi
+
+        echo $version
+}
+
+function detect_cms() {
+        filelist=`lftp -c "$LFTP_AUTOLOGIN;ls $FTP_PATH"`
+
+        IS_WORDPRESS=`( echo $filelist | grep wp-config.php ); echo $?`
+}
+
+detect_cms
+cmsver
