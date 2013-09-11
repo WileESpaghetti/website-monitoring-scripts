@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Verify whether or not this is actually a wordpress install;
-# FIXME add trap to cleanup
 
 # CONFIG
-# TODO move these to command line switches
 FTP_HOST=''
 FTP_USER=''
 FTP_PASS=''

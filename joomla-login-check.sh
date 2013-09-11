@@ -1,7 +1,7 @@
-# useful for making sure documented passwords are still up to date
-#FIXME should use command line switches 
-#TODO either convert this to curl or port the wordpress login check to wget to keep consistant
+#!/bin/bash
 
+# useful for making sure documented passwords are still up to date
+#TODO either convert this to curl or port the wordpress login check to wget to keep consistant
 
 # CONFIG
 jmuser=''
@@ -30,5 +30,5 @@ WGET_OPTIONS="-q $WGET_COOKIES"
 wget $WGET_OPTIONS --post-data="$USER&$PASS&$OPTION&$TASK&$TOKE" "$jmurl/index.php?option=com_login" -O - | egrep -qi '(Invalid Token|id="form-login")'
 
 # fail if bad token or login form detected.
-#FIXME Kinda hackish, suggestions welcome
+# Kinda hackish, suggestions welcome
 [ $? -ne 0 ]

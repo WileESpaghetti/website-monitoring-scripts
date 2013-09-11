@@ -2,10 +2,7 @@
 
 # REQUIREMENTS: lftp
 
-# TODO add error handling in case files can't be downloaded
-
 # CONFIG
-# TODO move these to command line switches
 FTP_HOST=''
 FTP_USER=''
 FTP_PASS=''
@@ -27,7 +24,6 @@ function wpversion() {
 	awk -F\' '/^[:space:]*\$wp_version/{print $2}' version.php
 
 	# cleanup
-	# FIXME need a TRAP to make sure cleanup goes successfully
 	rm version.php
 }
 
