@@ -39,6 +39,6 @@ wget $WGET_OPTIONS --post-data="$USER&$PASS&$OPTION&$TASK&$TOKE" "$jmurl/index.p
 LOGIN_SUCCESS=$?
 
 # cleanup
-rm cookies.txt
+rm $COOKIEJAR
 
 exit $LOGIN_SUCCESS
